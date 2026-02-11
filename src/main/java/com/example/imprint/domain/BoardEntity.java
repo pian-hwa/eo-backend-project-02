@@ -5,11 +5,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import java.time.LocalDateTime;
 
 @Entity //JAP가 관리하는 엔티티임을 명시
 @Getter // Lombok: getter 자동 생성
@@ -26,10 +22,6 @@ public class BoardEntity extends BaseTimeEntity {
 
     @Builder // 빌더 패턴 사용
     public BoardEntity(String name) {
-        this.name = name;
-    }
-
-    public void updateName(String name) {
         this.name = name;
     }
 
