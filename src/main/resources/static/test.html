@@ -39,7 +39,7 @@
 </section>
 
 <script>
-    // 1. 메일 발송
+    // 메일 발송
     async function sendMail() {
         const email = document.getElementById('email').value.trim();
         try {
@@ -50,7 +50,7 @@
         }
     }
 
-    // 2. 인증번호 확인
+    // 인증번호 확인
     async function verifyCode() {
         const email = document.getElementById('email').value;
         const code = document.getElementById('code').value;
@@ -62,7 +62,7 @@
         }
     }
 
-    // 3. 회원가입
+    // 회원가입
     async function joinUser() {
         const data = {
             email: document.getElementById('email').value,
