@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -26,32 +25,31 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                // CSRF 비활성화
-                .csrf(csrf -> csrf.disable()) // POST 요청 허용을 위해 필수
+                .csrf(csrf -> csrf.disable())
                 .headers(headers -> headers.frameOptions(f -> f.disable()))
-
                 .authorizeHttpRequests(auth -> auth
-                        // API 주소를 명시
-                        .requestMatchers("/api/mail/send", "/api/mail/verify", "/api/user/join").permitAll()
-
-                        // 화면 주소들도 명시
-                        .requestMatchers("/test.html", "/loginForm", "/joinForm", "/").permitAll()
-
-                        // 나머지만 잠그기
+                        // 회원가입 및 이메일 인증 관련 API 모두 허용
+                        .requestMatchers("/api/mail/**", "/account/signup").permitAll()
+                        // 로그인 API 주소 허용
+                        .requestMatchers("/account/login").permitAll()
+                        // 정적 리소스 및 화면 주소 허용
+                        .requestMatchers("/", "/test.html", "/loginForm.html", "/main.html").permitAll()
+                        .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
                         .anyRequest().authenticated()
                 )
 
                 .formLogin(form -> form
-                        .loginPage("/loginForm")
+                        .loginPage("/loginForm.html")
                         .usernameParameter("email")
                         .permitAll()
                 )
 
-
-                // 로그아웃 설정
                 .logout(logout -> logout
-                        .logoutSuccessUrl("/")
+                        .logoutUrl("/account/logout")
+                        .logoutSuccessUrl("/loginForm.html")
                         .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
+                        .permitAll()
                 );
 
         return http.build();
