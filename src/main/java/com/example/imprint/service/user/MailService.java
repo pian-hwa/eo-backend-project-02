@@ -28,7 +28,7 @@ public class MailService {
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(cleanEmail);
-        message.setFrom("sk41442457@gmail.com");
+        message.setFrom("ImPrint");
         message.setSubject("[Imprint] 회원가입 인증번호입니다.");
         message.setText("인증번호: " + authCode + "\n5분 이내에 입력해주세요.");
 

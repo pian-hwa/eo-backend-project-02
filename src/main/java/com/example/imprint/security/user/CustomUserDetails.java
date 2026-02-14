@@ -1,6 +1,7 @@
 package com.example.imprint.security.user;
 
 import com.example.imprint.domain.user.UserEntity;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -9,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
 
+@Getter
 @RequiredArgsConstructor
 public class CustomUserDetails implements UserDetails {
 
@@ -28,6 +30,10 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public String getUsername() {
         return user.getEmail();
+    }
+
+    public String getNickname() {
+        return user.getNickname();
     }
 
     // 계정 상태 관리 (모두 true로 설정해야 로그인이 됩니다)

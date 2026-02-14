@@ -15,4 +15,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     //별명 중복확인(회원가입)
     boolean existsByNickname(String nickname);
+
+    //별명 가져오기(쪽지용)
+    Optional<UserEntity> findByNickname(String nickname);
 }

@@ -56,4 +56,6 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+    // 동적 에이전트 로딩 경고를 숨기고 허용하는 옵션
+    jvmArgs("-XX:+EnableDynamicAgentLoading")
 }

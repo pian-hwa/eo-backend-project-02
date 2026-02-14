@@ -39,19 +39,21 @@ public class SecurityConfig {
                         .requestMatchers("/h2-console/**").permitAll()    //
                         .anyRequest().authenticated()
                 )
-
                 .formLogin(form -> form
                         .loginPage("/loginForm.html")
+                        // 프론트가 POST를 보낼 위치
+                        .loginProcessingUrl("/account/login")
+                        // 필드명 일치
                         .usernameParameter("email")
+                        .passwordParameter("password")
+                        .defaultSuccessUrl("/main.html", true)
                         .permitAll()
                 )
-
                 .logout(logout -> logout
                         .logoutUrl("/account/logout")
                         .logoutSuccessUrl("/loginForm.html")
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
-                        .permitAll()
                 );
 
             return http.build();
