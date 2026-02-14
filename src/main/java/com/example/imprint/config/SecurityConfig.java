@@ -28,14 +28,12 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()))
                 .authorizeHttpRequests(auth -> auth
-                        // 회원가입 및 이메일 인증 관련 API 모두 허용
-                        .requestMatchers("/api/mail/**", "/account/signup").permitAll()
-                        // 로그인 API 주소 허용
-                        .requestMatchers("/account/login").permitAll()
+                        // 회원가입 및 이메일 인증 로그인 관련 API 모두 허용
+                        .requestMatchers("/api/mail/**", "/account/**").permitAll()
                         // 정적 리소스 및 화면 주소 허용
                         .requestMatchers("/", "/test.html", "/loginForm.html", "/main.html").permitAll()
                         .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
-                        .requestMatchers("/api/boards/**").permitAll()    // 모든 접근 허용
+                        .requestMatchers("/boards/**").permitAll()    // 모든 접근 허용
                         .requestMatchers("/h2-console/**").permitAll()    //
                         .anyRequest().authenticated()
                 )
