@@ -2,14 +2,13 @@ package com.example.imprint.domain;
 
 import com.example.imprint.domain.user.UserEntity;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity //JAP가 관리하는 엔티티임을 명시
 @Getter // Lombok: getter 자동 생성
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED) // 기본 생성자 (JPA 필수)
 @EntityListeners(AuditingEntityListener.class) // 생성&수정 시간 자동 관리
 public class BoardEntity extends BaseTimeEntity {
@@ -26,8 +25,9 @@ public class BoardEntity extends BaseTimeEntity {
     @JoinColumn(name = "user_id" , nullable = false)
     private UserEntity creator;
 
-    @Builder // 빌더 패턴 사용
-    public BoardEntity(String name, UserEntity creator, boolean isPrivate) {
+     // 빌더 패턴 사용
+    public BoardEntity(Long id, String name, UserEntity creator, boolean isPrivate) {
+        this.id = id;
         this.name = name;
         this.creator = creator;
     }
