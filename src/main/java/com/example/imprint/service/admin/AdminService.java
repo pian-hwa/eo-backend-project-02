@@ -1,9 +1,10 @@
-package com.example.imprint.service.user;
+package com.example.imprint.service.admin;
 
 import com.example.imprint.domain.BoardEntity;
 import com.example.imprint.domain.user.BoardManager;
 import com.example.imprint.domain.user.UserEntity;
 import com.example.imprint.domain.user.UserRole;
+import com.example.imprint.domain.user.UserStatus;
 import com.example.imprint.repository.BoardRepository;
 import com.example.imprint.repository.user.BoardManagerRepository;
 import com.example.imprint.repository.user.UserRepository;
@@ -87,6 +88,21 @@ public class AdminService {
             user.changeRole(UserRole.USER);
         } else {
             user.changeRole(UserRole.MANAGER);
+        }
+    }
+
+    // 사용자의 상태를 직접 수정 (ACTIVE, BANNED)
+    @Transactional
+    public void updateUserStatus(Long userId, UserStatus newStatus) {
+        UserEntity user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 사용자를 찾을 수 없습니다."));
+
+        // 유저 엔티티에 정의된 메서드 활용
+        switch (newStatus) {
+            case ACTIVE -> user.activate();
+            case BANNED -> user.ban();
+            case DELETED -> user.delete();
+            default -> throw new IllegalArgumentException("지원하지 않는 상태 변경입니다.");
         }
     }
 }

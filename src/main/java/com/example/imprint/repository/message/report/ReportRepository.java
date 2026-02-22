@@ -11,4 +11,7 @@ public interface ReportRepository extends JpaRepository<ReportEntity, Long> {
 
     // 관리자가 최신순으로 모든 신고를 확인
     List<ReportEntity> findAllByOrderByIdDesc();
+
+    // 최신순으로 정렬
+    List<ReportEntity> findAllByOrderByCreatedAtDesc();
 }

@@ -118,4 +118,16 @@ public class MessageService {
         // Entity의 deletedByReceiver = true
         message.deleteByReceiver();
     }
+
+    // 관리자 대시보드용 (운영진에게 온 모든 문의 메시지 조회)
+    public List<MessageResponseDto> getAdminSupports() {
+        return messageRepository.findAdminSupports().stream()
+                .map(entity -> MessageResponseDto.builder()
+                        .id(entity.getId())
+                        .content(entity.getContent())
+                        .senderNickname(entity.getSender().getNickname())
+                        .createdAt(entity.getCreatedAt())
+                        .build())
+                .toList();
+    }
 }

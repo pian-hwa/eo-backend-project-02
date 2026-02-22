@@ -56,6 +56,10 @@ public class UserEntity extends BaseTimeEntity {
         this.status = UserStatus.BANNED;
     }
 
+    public void delete() {
+        this.status = UserStatus.DELETED;
+    }
+
     public void changeRole(UserRole newRole) {
         this.role = newRole;
     }

@@ -5,9 +5,10 @@ import java.util.Arrays;
 
 @Getter
 public enum UserStatus {
-    PENDING(0, "대기 (인증 전)"), // "로그인 전"보다는 "인증 전"이 더 정확합니다!
+    PENDING(0, "대기 (인증 전)"),
     ACTIVE(1, "활성 (정상)"),
-    BANNED(2, "정지 (차단됨)");
+    BANNED(2, "정지 (차단됨)"),
+    DELETED(3, "탈퇴 (삭제됨)");
 
     private final int value;
     private final String description;
