@@ -7,6 +7,7 @@ import com.example.imprint.domain.user.UserRole;
 import com.example.imprint.repository.BoardRepository;
 import com.example.imprint.repository.user.BoardManagerRepository;
 import com.example.imprint.repository.user.UserRepository;
+import com.example.imprint.service.admin.AdminService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

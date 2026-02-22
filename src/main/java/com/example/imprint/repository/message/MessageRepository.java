@@ -3,6 +3,8 @@ package com.example.imprint.repository.message;
 import com.example.imprint.domain.message.MessageEntity;
 import com.example.imprint.domain.user.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
 import java.util.List;
 
 public interface MessageRepository extends JpaRepository<MessageEntity, Long> {
@@ -15,4 +17,12 @@ public interface MessageRepository extends JpaRepository<MessageEntity, Long> {
 
     // 안 읽은 쪽지 개수 확인 (알림용)
     long countByReceiverAndIsReadFalseAndDeletedByReceiverFalse(UserEntity receiver);
+
+    // 수신자의 권한이 ADMIN인 메시지들을 최신순으로 조회
+    @Query("SELECT m FROM MessageEntity m JOIN m.receiver u WHERE u.role = 'ADMIN' ORDER BY m.createdAt DESC")
+    List<MessageEntity> findAdminSupports();
+
+    // 관리자가 아직 읽지 않은(미처리) 메시지 카운트
+    @Query("SELECT COUNT(m) FROM MessageEntity m JOIN m.receiver u WHERE u.role = 'ADMIN' AND m.isRead = false")
+    long countPendingSupports();
 }
